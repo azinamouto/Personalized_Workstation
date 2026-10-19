@@ -62,7 +62,8 @@ export class FeatureGuard implements CanActivate {
       return true;
     }
 
-    // Phase 0 / MVP: Free tier unlocks core features
+    // TODO: plug in plan/feature-flag lookup here when billing tiers are introduced.
+    // Phase 0 / MVP: Free tier unlocks all core features unconditionally.
     return true;
   }
 }
