@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { storageGet, storageSet } from '../utils/storage';
 import {
   Workspace,
   UserRole,
