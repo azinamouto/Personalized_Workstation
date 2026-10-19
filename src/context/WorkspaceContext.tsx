@@ -203,61 +203,21 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   );
 
   // Sync to local storage
-  useEffect(() => {
-    localStorage.setItem('talibon_workspaces', JSON.stringify(workspaces));
-  }, [workspaces]);
+  useEffect(() => { storageSet('talibon_workspaces', workspaces); }, [workspaces]);
+  useEffect(() => { storageSet('talibon_active_ws', activeWorkspaceId); }, [activeWorkspaceId]);
+  useEffect(() => { storageSet('talibon_tasks', tasks); }, [tasks]);
+  useEffect(() => { storageSet('talibon_notes', notes); }, [notes]);
+  useEffect(() => { storageSet('talibon_events', events); }, [events]);
+  useEffect(() => { storageSet('talibon_goals', goals); }, [goals]);
+  useEffect(() => { storageSet('talibon_classes', classes); }, [classes]);
+  useEffect(() => { storageSet('talibon_students', students); }, [students]);
+  useEffect(() => { storageSet('talibon_lesson_plans', lessonPlans); }, [lessonPlans]);
+  useEffect(() => { storageSet('talibon_assignments', assignments); }, [assignments]);
+  useEffect(() => { storageSet('talibon_products', products); }, [products]);
+  useEffect(() => { storageSet('talibon_sales', sales); }, [sales]);
 
-  useEffect(() => {
-    localStorage.setItem('talibon_active_ws', activeWorkspaceId);
-  }, [activeWorkspaceId]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_tasks', JSON.stringify(tasks));
-  }, [tasks]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_notes', JSON.stringify(notes));
-  }, [notes]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_events', JSON.stringify(events));
-  }, [events]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_goals', JSON.stringify(goals));
-  }, [goals]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_classes', JSON.stringify(classes));
-  }, [classes]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_students', JSON.stringify(students));
-  }, [students]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_lesson_plans', JSON.stringify(lessonPlans));
-  }, [lessonPlans]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_assignments', JSON.stringify(assignments));
-  }, [assignments]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_products', JSON.stringify(products));
-  }, [products]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_sales', JSON.stringify(sales));
-  }, [sales]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_finance', JSON.stringify(finance));
-  }, [finance]);
-
-  useEffect(() => {
-    localStorage.setItem('talibon_trackers', JSON.stringify(trackers));
-  }, [trackers]);
+  useEffect(() => { storageSet('talibon_finance', finance); }, [finance]);
+  useEffect(() => { storageSet('talibon_trackers', trackers); }, [trackers]);
 
   const activeWorkspace =
     workspaces.find(w => w.id === activeWorkspaceId) || workspaces[0] || INITIAL_WORKSPACES[0];
