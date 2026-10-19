@@ -16,6 +16,11 @@ export const envSchema = z.object({
 export type EnvConfig = z.infer<typeof envSchema>;
 export function validateEnv(): EnvConfig {
   const result = envSchema.safeParse(process.env);
-  if (!result.success) throw new Error('Invalid environment: ' + result.error.issues.map(issue => issue.path.join('.')).join(', '));
+  if (!result.success) {
+    const issues = result.error.issues
+      .map(issue => `${issue.path.join('.')}: ${issue.message}`)
+      .join(', ');
+    throw new Error(`Invalid environment configuration — ${issues}`);
+  }
   return result.data;
 }
