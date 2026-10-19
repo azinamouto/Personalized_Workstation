@@ -19,6 +19,6 @@ export class AppLogger implements LoggerService {
   }
 
   verbose?(message: any, ...optionalParams: any[]) {
-    console.info(`[VERBOSE] [${new Date().toISOString()}] ${message}`, ...optionalParams);
+    console.log(`[VERBOSE] [${new Date().toISOString()}] ${message}`, ...optionalParams);
   }
 }
