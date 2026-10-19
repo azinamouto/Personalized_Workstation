@@ -3,13 +3,14 @@ import {
   Get,
   Post,
   Put,
+  Patch,
   Delete,
   Param,
   Body,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth, ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { WorkspaceGuard } from '../../common/guards/workspace.guard';
 import { PaginationDto } from '../../common/dto/pagination.dto';
@@ -17,22 +18,59 @@ import { IsEnum, IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-valida
 import { PriorityLevel, TaskStatus } from '@prisma/client';
 
 export class CreateTaskDto {
+  @ApiProperty({ description: 'Task title', maxLength: 300 })
   @IsString()
   @IsNotEmpty()
   title: string = '';
 
+  @ApiPropertyOptional({ description: 'Optional longer description of the task' })
   @IsString()
   @IsOptional()
   description?: string;
 
+  @ApiPropertyOptional({ enum: PriorityLevel, default: PriorityLevel.medium })
   @IsEnum(PriorityLevel)
   @IsOptional()
   priority: PriorityLevel = PriorityLevel.medium;
 
+  @ApiPropertyOptional({ description: 'ISO 8601 due date-time string' })
   @IsString()
   @IsOptional()
   dueAt?: string;
 
+  @ApiPropertyOptional({ description: 'Estimated duration in minutes', minimum: 0 })
+  @IsNumber()
+  @IsOptional()
+  estimatedMinutes?: number;
+}
+
+export class UpdateTaskDto {
+  @ApiPropertyOptional({ description: 'Updated task title', maxLength: 300 })
+  @IsString()
+  @IsOptional()
+  title?: string;
+
+  @ApiPropertyOptional({ description: 'Updated description' })
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @ApiPropertyOptional({ enum: PriorityLevel })
+  @IsEnum(PriorityLevel)
+  @IsOptional()
+  priority?: PriorityLevel;
+
+  @ApiPropertyOptional({ enum: TaskStatus })
+  @IsEnum(TaskStatus)
+  @IsOptional()
+  status?: TaskStatus;
+
+  @ApiPropertyOptional({ description: 'ISO 8601 due date-time string' })
+  @IsString()
+  @IsOptional()
+  dueAt?: string;
+
+  @ApiPropertyOptional({ minimum: 0 })
   @IsNumber()
   @IsOptional()
   estimatedMinutes?: number;
@@ -107,6 +145,21 @@ export class TasksController {
       workspaceId,
       status: TaskStatus.done,
       completedAt: new Date().toISOString(),
+    };
+  }
+
+  @Patch(':taskId')
+  @ApiOperation({ summary: 'Partially update a task' })
+  updateTask(
+    @Param('workspaceId') workspaceId: string,
+    @Param('taskId') taskId: string,
+    @Body() dto: UpdateTaskDto,
+  ) {
+    return {
+      id: taskId,
+      workspaceId,
+      ...dto,
+      updatedAt: new Date().toISOString(),
     };
   }
 

@@ -7,19 +7,23 @@ export interface PaginationMeta {
   page: number;
   limit: number;
   total: number;
-  totalPages?: number;
+  /** Total number of pages derived from total / limit. Always present in API responses. */
+  totalPages: number;
 }
 
+/** Standard envelope for all successful API responses. */
 export interface ApiResponse<T> {
   data: T;
   meta?: PaginationMeta;
 }
 
+/** Shape of error bodies returned by the API on non-2xx responses. */
 export interface ApiErrorDetail {
   field?: string;
   message: string;
 }
 
+/** Top-level error wrapper included in non-2xx API responses. */
 export interface ApiError {
   error: {
     code: string;
@@ -29,6 +33,7 @@ export interface ApiError {
   };
 }
 
+/** Public profile information for a registered user. */
 export interface ProfileDto {
   id: string;
   fullName: string;
@@ -39,6 +44,7 @@ export interface ProfileDto {
   createdAt: string;
 }
 
+/** Workspace summary returned by the API. */
 export interface WorkspaceDto {
   id: string;
   ownerId: string;

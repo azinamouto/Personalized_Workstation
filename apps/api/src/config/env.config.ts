@@ -9,13 +9,18 @@ export const envSchema = z.object({
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(20),
   CORS_ORIGINS: z.string().default('http://localhost:5173').refine(value => value.split(',').every(origin => {
     try { return new URL(origin.trim()).origin === origin.trim(); } catch { return false; }
-  })),
+  }), { message: 'CORS_ORIGINS must be a comma-separated list of valid origins (e.g. https://example.com)' }),
   THROTTLE_LIMIT: z.coerce.number().int().positive().default(100),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
 });
 export type EnvConfig = z.infer<typeof envSchema>;
 export function validateEnv(): EnvConfig {
   const result = envSchema.safeParse(process.env);
-  if (!result.success) throw new Error('Invalid environment: ' + result.error.issues.map(issue => issue.path.join('.')).join(', '));
+  if (!result.success) {
+    const issues = result.error.issues
+      .map(issue => `${issue.path.join('.')}: ${issue.message}`)
+      .join(', ');
+    throw new Error(`Invalid environment configuration — ${issues}`);
+  }
   return result.data;
 }
