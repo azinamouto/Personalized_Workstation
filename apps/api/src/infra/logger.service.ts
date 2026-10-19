@@ -1,5 +1,10 @@
 import { Injectable, LoggerService } from '@nestjs/common';
 
+/**
+ * Simple console-based logger that implements the NestJS LoggerService interface.
+ * Each method prefixes output with a level tag and ISO timestamp.
+ * Can be swapped for a structured logger (e.g. pino) without changing call sites.
+ */
 @Injectable()
 export class AppLogger implements LoggerService {
   log(message: any, ...optionalParams: any[]) {
