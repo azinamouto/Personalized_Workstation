@@ -133,13 +133,12 @@ interface WorkspaceContextType {
 const WorkspaceContext = createContext<WorkspaceContextType | null>(null);
 
 export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [workspaces, setWorkspaces] = useState<Workspace[]>(() => {
-    const saved = localStorage.getItem('talibon_workspaces');
-    return saved ? JSON.parse(saved) : INITIAL_WORKSPACES;
-  });
+  const [workspaces, setWorkspaces] = useState<Workspace[]>(() =>
+    storageGet('talibon_workspaces', INITIAL_WORKSPACES)
+  );
 
   const [activeWorkspaceId, setActiveWorkspaceId] = useState<string>(() => {
-    const saved = localStorage.getItem('talibon_active_ws');
+    const saved = storageGet<string | null>('talibon_active_ws', null);
     return saved && INITIAL_WORKSPACES.some(w => w.id === saved)
       ? saved
       : INITIAL_WORKSPACES[0]?.id || 'ws-teacher-01';
@@ -155,65 +154,53 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   });
 
   // Domain states
-  const [tasks, setTasks] = useState<TaskItem[]>(() => {
-    const saved = localStorage.getItem('talibon_tasks');
-    return saved ? JSON.parse(saved) : INITIAL_TASKS;
-  });
+  const [tasks, setTasks] = useState<TaskItem[]>(() =>
+    storageGet('talibon_tasks', INITIAL_TASKS)
+  );
 
-  const [notes, setNotes] = useState<NoteItem[]>(() => {
-    const saved = localStorage.getItem('talibon_notes');
-    return saved ? JSON.parse(saved) : INITIAL_NOTES;
-  });
+  const [notes, setNotes] = useState<NoteItem[]>(() =>
+    storageGet('talibon_notes', INITIAL_NOTES)
+  );
 
-  const [events, setEvents] = useState<CalendarEvent[]>(() => {
-    const saved = localStorage.getItem('talibon_events');
-    return saved ? JSON.parse(saved) : INITIAL_CALENDAR_EVENTS;
-  });
+  const [events, setEvents] = useState<CalendarEvent[]>(() =>
+    storageGet('talibon_events', INITIAL_CALENDAR_EVENTS)
+  );
 
-  const [goals, setGoals] = useState<GoalItem[]>(() => {
-    const saved = localStorage.getItem('talibon_goals');
-    return saved ? JSON.parse(saved) : INITIAL_GOALS;
-  });
+  const [goals, setGoals] = useState<GoalItem[]>(() =>
+    storageGet('talibon_goals', INITIAL_GOALS)
+  );
 
-  const [classes, setClasses] = useState<TeacherClass[]>(() => {
-    const saved = localStorage.getItem('talibon_classes');
-    return saved ? JSON.parse(saved) : INITIAL_CLASSES;
-  });
+  const [classes, setClasses] = useState<TeacherClass[]>(() =>
+    storageGet('talibon_classes', INITIAL_CLASSES)
+  );
 
-  const [students, setStudents] = useState<StudentRecord[]>(() => {
-    const saved = localStorage.getItem('talibon_students');
-    return saved ? JSON.parse(saved) : INITIAL_STUDENTS;
-  });
+  const [students, setStudents] = useState<StudentRecord[]>(() =>
+    storageGet('talibon_students', INITIAL_STUDENTS)
+  );
 
-  const [lessonPlans, setLessonPlans] = useState<LessonPlan[]>(() => {
-    const saved = localStorage.getItem('talibon_lesson_plans');
-    return saved ? JSON.parse(saved) : INITIAL_LESSON_PLANS;
-  });
+  const [lessonPlans, setLessonPlans] = useState<LessonPlan[]>(() =>
+    storageGet('talibon_lesson_plans', INITIAL_LESSON_PLANS)
+  );
 
-  const [assignments, setAssignments] = useState<StudentAssignment[]>(() => {
-    const saved = localStorage.getItem('talibon_assignments');
-    return saved ? JSON.parse(saved) : INITIAL_ASSIGNMENTS;
-  });
+  const [assignments, setAssignments] = useState<StudentAssignment[]>(() =>
+    storageGet('talibon_assignments', INITIAL_ASSIGNMENTS)
+  );
 
-  const [products, setProducts] = useState<BusinessProduct[]>(() => {
-    const saved = localStorage.getItem('talibon_products');
-    return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
-  });
+  const [products, setProducts] = useState<BusinessProduct[]>(() =>
+    storageGet('talibon_products', INITIAL_PRODUCTS)
+  );
 
-  const [sales, setSales] = useState<BusinessSale[]>(() => {
-    const saved = localStorage.getItem('talibon_sales');
-    return saved ? JSON.parse(saved) : INITIAL_SALES;
-  });
+  const [sales, setSales] = useState<BusinessSale[]>(() =>
+    storageGet('talibon_sales', INITIAL_SALES)
+  );
 
-  const [finance, setFinance] = useState<FinanceSummary>(() => {
-    const saved = localStorage.getItem('talibon_finance');
-    return saved ? JSON.parse(saved) : INITIAL_FINANCE;
-  });
+  const [finance, setFinance] = useState<FinanceSummary>(() =>
+    storageGet('talibon_finance', INITIAL_FINANCE)
+  );
 
-  const [trackers, setTrackers] = useState<CustomTracker[]>(() => {
-    const saved = localStorage.getItem('talibon_trackers');
-    return saved ? JSON.parse(saved) : INITIAL_TRACKERS;
-  });
+  const [trackers, setTrackers] = useState<CustomTracker[]>(() =>
+    storageGet('talibon_trackers', INITIAL_TRACKERS)
+  );
 
   // Sync to local storage
   useEffect(() => {
