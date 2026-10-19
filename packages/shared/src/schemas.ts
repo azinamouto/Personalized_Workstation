@@ -6,6 +6,7 @@ import {
   AssignmentStatus,
 } from './enums';
 
+/** Validation schema for creating or updating a user profile. */
 export const createProfileSchema = z.object({
   fullName: z.string().min(1, 'Full name is required'),
   avatarUrl: z.string().url().optional(),
@@ -15,6 +16,7 @@ export const createProfileSchema = z.object({
   preferences: z.record(z.unknown()).default({}),
 });
 
+/** Validation schema for creating a new workspace. */
 export const createWorkspaceSchema = z.object({
   name: z.string().min(1, 'Workspace name is required').max(100),
   template: z.nativeEnum(TemplateKey).default(TemplateKey.CUSTOM),
@@ -24,6 +26,7 @@ export const createWorkspaceSchema = z.object({
   settings: z.record(z.unknown()).default({}),
 });
 
+/** Validation schema for creating a task. */
 export const createTaskSchema = z.object({
   title: z.string().min(1, 'Title is required').max(255),
   description: z.string().optional(),
@@ -87,6 +90,7 @@ export const createAssignmentSchema = z.object({
   group: z.enum(['today', 'this_week', 'later']).default('today'),
 });
 
+/** Validation schema for list/search query pagination parameters. */
 export const paginationSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(20),
