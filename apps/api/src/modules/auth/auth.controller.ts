@@ -47,12 +47,12 @@ export class AuthController {
 
     return {
       id: user.id || 'usr-dev-01',
-      fullName: user.fullName || 'Enzo Labrador',
-      email: user.email || 'labradarenz@gmail.com',
+      fullName: user.fullName || 'Dev User',
+      email: user.email || 'dev@example.com',
       avatarUrl: user.avatarUrl || null,
       primaryRole: 'teacher',
       locale: 'en',
-      timezone: 'Asia/Manila',
+      timezone: 'UTC',
     };
   }
 
