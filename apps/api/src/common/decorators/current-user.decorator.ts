@@ -5,8 +5,8 @@ export const CurrentUser = createParamDecorator(
     const request = ctx.switchToHttp().getRequest();
     const user = request.user || {
       id: 'usr-dev-01',
-      email: 'labradarenz@gmail.com',
-      fullName: 'Enzo Labrador',
+      email: 'dev@example.com',
+      fullName: 'Dev User',
     };
     return data ? user?.[data] : user;
   }
