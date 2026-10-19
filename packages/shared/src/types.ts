@@ -7,7 +7,8 @@ export interface PaginationMeta {
   page: number;
   limit: number;
   total: number;
-  totalPages?: number;
+  /** Total number of pages derived from total / limit. Always present in API responses. */
+  totalPages: number;
 }
 
 export interface ApiResponse<T> {
