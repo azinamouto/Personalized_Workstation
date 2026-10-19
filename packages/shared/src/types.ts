@@ -33,6 +33,7 @@ export interface ApiError {
   };
 }
 
+/** Public profile information for a registered user. */
 export interface ProfileDto {
   id: string;
   fullName: string;
@@ -43,6 +44,7 @@ export interface ProfileDto {
   createdAt: string;
 }
 
+/** Workspace summary returned by the API. */
 export interface WorkspaceDto {
   id: string;
   ownerId: string;
