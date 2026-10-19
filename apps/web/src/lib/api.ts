@@ -1,7 +1,7 @@
 import { supabase } from './supabase';
 
 /** Allowed HTTP methods for API requests. */
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 /** Base URL for all API requests. Falls back to relative /api/v1 for same-origin deployments. */
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
