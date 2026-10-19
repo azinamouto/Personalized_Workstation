@@ -148,6 +148,21 @@ export class TasksController {
     };
   }
 
+  @Patch(':taskId')
+  @ApiOperation({ summary: 'Partially update a task' })
+  updateTask(
+    @Param('workspaceId') workspaceId: string,
+    @Param('taskId') taskId: string,
+    @Body() dto: UpdateTaskDto,
+  ) {
+    return {
+      id: taskId,
+      workspaceId,
+      ...dto,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
   @Delete(':taskId')
   @ApiOperation({ summary: 'Delete a task' })
   deleteTask(
